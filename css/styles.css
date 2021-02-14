@@ -1,6 +1,6 @@
 html, body {
     margin: 0;
-    background-color: #e7e7ea;
+    background-color:  rgb(75, 75, 75);
     font-family: "Inconsolata", monospace;
     font-size: 0.93em;
     font-weight: bold;
@@ -12,16 +12,18 @@ a{
     min-height: 20;
 }
 
-#container{
-    height: 100vh;
+#container{ 
+    height: 50vh;
 }
 
 #toolbar {
-    background-color: rgb(60, 60, 60);
+    background-color: rgb(75, 75, 75);
     height: 10%;
-    width: 100%;
-    min-height: 120px;
+    width: 100% - 20px;
+    min-height: 100px;
     min-width: 800px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 #toolbar > div {
     display: flex;
