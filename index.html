@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
-            
+        <title>GraphVisualizer</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="index.js"></script>
     </head>
-
     <body>
-        
+        <div id = "container">
+            <div id="toolbar">
+                <div id="toolbarEditGraph">
+                    <button id="addVertex">                             Dodaj wierzchołek</button>
+                    <button id="removeVertex">                          Usuń wierzchołek</button>
+                    <button id="addEdge">                               Dodaj krawędź</button>
+                    <button id="removeEdge">                            Usuń krawędź</button>
+                    <button id="moveVertex">                            Przesuń wierzchołek</button>
+                    <button id="editEdge">                              Edytuj krawędź</button>
+                    <button id="simulateForces">                        Symuluj siły</button>
+                    <button id="saveToFile">                            Zapisz</button>
+                    <button id="readFromFile">                          Wczytaj</button>
+                    <button id="chooseAlg" onclick="ChooseAlg()">       Wybierz algorytm</button>                  
+                </div>
+                <div id="toolbarChooseAlg" style="display: none;">
+                    <button id="kolory">                                Kolory</button>
+                    <button id="ReturnToEdit" onclick="ReturnToEdit()"> Powrót</button> 
+                </div>
+            </div>  
+
+            <canvas id="graphCanvas" width="600" height="300">
+
+            </canvas>
+        </div>
     </body>
 
 </html>
