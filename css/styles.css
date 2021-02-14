@@ -1,12 +1,15 @@
-body {
-    background-color: lightcoral;
+html, body {
     margin: 0;
-}
+    background-color: #e7e7ea;
+    font-family: "Inconsolata", monospace;
+    font-size: 0.93em;
+    font-weight: bold;
+  }
 
-button {
-    margin: 2px;
-    padding: 3px;
-    min-height: 45px;
+a{
+    margin: 1px;
+    padding: 1px;
+    min-height: 20;
 }
 
 #container{
@@ -18,7 +21,7 @@ button {
     height: 10%;
     width: 100%;
     min-height: 120px;
-    min-width: 600px;
+    min-width: 800px;
 }
 #toolbar > div {
     display: flex;
@@ -30,7 +33,7 @@ button {
     /* width: 90%; */
 }
 
-#toolbarEditGraph > button {
+#toolbarEditGraph > a {
     color: rgb(0, 0, 0);
     height: 20%;
     flex-grow: 1;
