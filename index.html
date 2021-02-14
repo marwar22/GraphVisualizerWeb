@@ -2,31 +2,37 @@
 <html>
     <head>
         <title>GraphVisualizer</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/button_styles.css">
+        <script src="utils.js"></script>
+        <script src="edge.js"></script>
+        <script src="vertex.js"></script>
+        <script src="forces.js"></script>
+        <script src="graph.js"></script>
         <script src="index.js"></script>
     </head>
     <body>
         <div id = "container">
             <div id="toolbar">
                 <div id="toolbarEditGraph">
-                    <button id="addVertex">                             Dodaj wierzchołek</button>
-                    <button id="removeVertex">                          Usuń wierzchołek</button>
-                    <button id="addEdge">                               Dodaj krawędź</button>
-                    <button id="removeEdge">                            Usuń krawędź</button>
-                    <button id="moveVertex">                            Przesuń wierzchołek</button>
-                    <button id="editEdge">                              Edytuj krawędź</button>
-                    <button id="simulateForces">                        Symuluj siły</button>
-                    <button id="saveToFile">                            Zapisz</button>
-                    <button id="readFromFile">                          Wczytaj</button>
-                    <button id="chooseAlg" onclick="ChooseAlg()">       Wybierz algorytm</button>                  
+                    <a class="btn" id="addVertex" onclick="AddVertexButton()"> Dodaj wierzchołek</a>
+                    <a class="btn" id="removeVertex">                          Usuń wierzchołek</a>
+                    <a class="btn" id="addEdge">                               Dodaj krawędź</a>
+                    <a class="btn" id="removeEdge">                            Usuń krawędź</a>
+                    <a class="btn" id="moveVertex">                            Przesuń wierzchołek</a>
+                    <a class="btn" id="editEdge">                              Edytuj krawędź</a>
+                    <a class="btn" id="simulateForces">                        Symuluj siły</a>
+                    <a class="btn" id="saveToFile">                            Zapisz</a>
+                    <a class="btn" id="readFromFile">                          Wczytaj</a>
+                    <a class="btn" id="chooseAlg" onclick="ChooseAlg()">       Wybierz algorytm</a>                  
                 </div>
                 <div id="toolbarChooseAlg" style="display: none;">
-                    <button id="kolory">                                Kolory</button>
-                    <button id="ReturnToEdit" onclick="ReturnToEdit()"> Powrót</button> 
+                    <a class="btn" id="kolory">                                Kolory</a>
+                    <a class="btn" id="ReturnToEdit" onclick="ReturnToEdit()"> Powrót</a> 
                 </div>
             </div>  
 
-            <canvas id="graphCanvas" width="600" height="300">
+            <canvas id="graphCanvas" width="600" height="1000">
 
             </canvas>
         </div>
