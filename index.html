@@ -4,13 +4,18 @@
         <title>GraphVisualizer</title>
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/button_styles.css">
+        <script src="utils.js"></script>
+        <script src="edge.js"></script>
+        <script src="vertex.js"></script>
+        <script src="forces.js"></script>
+        <script src="graph.js"></script>
         <script src="index.js"></script>
     </head>
     <body>
         <div id = "container">
             <div id="toolbar">
                 <div id="toolbarEditGraph">
-                    <a class="btn" id="addVertex">                             Dodaj wierzchołek</a>
+                    <a class="btn" id="addVertex" onclick="AddVertexButton()"> Dodaj wierzchołek</a>
                     <a class="btn" id="removeVertex">                          Usuń wierzchołek</a>
                     <a class="btn" id="addEdge">                               Dodaj krawędź</a>
                     <a class="btn" id="removeEdge">                            Usuń krawędź</a>
@@ -27,7 +32,7 @@
                 </div>
             </div>  
 
-            <canvas id="graphCanvas" width="600" height="300">
+            <canvas id="graphCanvas" width="600" height="1000">
 
             </canvas>
         </div>
