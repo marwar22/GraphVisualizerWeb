@@ -43,9 +43,6 @@ a{
 }
 
 #toolbarEditGraph > a {
-    color: rgb(0, 0, 0);
-    height: 20%;
-    flex-grow: 1;
 }
 
 #graphCanvas {
