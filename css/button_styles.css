@@ -1,23 +1,31 @@
 .btn {
-  background-color: lightblue;
-  color: lightcoral;
-  border: lightcoral solid 0.3rem;
+  background-color: rgb(255, 255, 255);
+  color: black;
+  border:black solid 0.25rem;
   border-radius: 0.5rem;
   text-align: center;
   text-decoration: none;
-  box-shadow: 0 0.5rem greenyellow,0 0.7rem #222;  
+  box-shadow: -0.1rem 0.3rem greenyellow,-0.1rem 0.6rem #222;  
   position: relative;
   top: 0;
-  transition: all 300ms ease-in-out;
+  transition: all 150ms ease-in-out;
+
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+  cursor: pointer;
 }
 
 .btn:hover {
-  background-color: lightcoral;
-  color: lightblue; 
+  background-color: black;
+  color: rgb(162, 162, 162); 
   top: 0.1rem;
-  box-shadow: 0 0.4rem greenyellow, 0 0.6rem #222;
+  right: 0.02rem;
+  box-shadow: -0.08rem 0.2rem greenyellow, -0.08rem 0.5rem #222;
 }
 .btn:active {
-  top: 0.4rem;
-  box-shadow: 0 0.1rem greenyellow, 0 0.3rem #222;
+  top: 0.25rem;
+  right: 0.05rem;
+  box-shadow: -0.05rem 0.05rem greenyellow, -0.05rem 0.35rem #222;
 }
