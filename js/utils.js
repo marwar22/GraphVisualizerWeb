@@ -19,9 +19,20 @@ var stateEnum = {
     REMOVEVERTEX: 1,
     ADDEDGE: 2,
     REMOVEEDGE: 3,
-    EDITEDGE: 4,
-    CHOOSEALG: 5,
-    RUNALG: 6,
-    SAVEFILE: 7,
-    LOADFILE: 8
+    MOVEVERTEX: 3,
+    EDITEDGE: 5,
+    CHOOSEALG: 6,
+    RUNALG: 7,
+    SAVEFILE: 8,
+    LOADFILE: 9
 };  
+
+function getRandomInt(minval, maxval) {
+    return Math.floor(Math.random() * (maxval - minval)) + minval;
+}
+
+function swap(_t1,_t2) {
+    let _t =  _t1;
+    _t1 = _t2;
+    _t2 = _t;
+}

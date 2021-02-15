@@ -57,3 +57,7 @@ function MidEdgeVertexAttractionForce(distance,optDst = OPT_ME_V_DST) {
     if (distance < optDst) {force *= -1; }
     return Math.min(distance / 100, force);
 }
+
+function CalculateForces(){
+    console.log("istnieje");
+}

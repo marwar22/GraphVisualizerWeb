@@ -4,27 +4,29 @@
         <title>GraphVisualizer</title>
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/button_styles.css">
-        <script src="utils.js"></script>
-        <script src="edge.js"></script>
-        <script src="vertex.js"></script>
-        <script src="forces.js"></script>
-        <script src="graph.js"></script>
-        <script src="index.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/edge.js"></script>
+        <script src="js/vertex.js"></script>
+        <script src="js/forces.js"></script>
+        <script src="js/graph.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/buttonHandle.js"></script>
     </head>
     <body>
         <div id = "container">
             <div id="toolbar">
                 <div id="toolbarEditGraph">
-                    <a class="btn" id="addVertex" onclick="AddVertexButton()"> Dodaj wierzchołek</a>
-                    <a class="btn" id="removeVertex">                          Usuń wierzchołek</a>
-                    <a class="btn" id="addEdge">                               Dodaj krawędź</a>
-                    <a class="btn" id="removeEdge">                            Usuń krawędź</a>
-                    <a class="btn" id="moveVertex">                            Przesuń wierzchołek</a>
-                    <a class="btn" id="editEdge">                              Edytuj krawędź</a>
-                    <a class="btn" id="simulateForces">                        Symuluj siły</a>
-                    <a class="btn" id="saveToFile">                            Zapisz</a>
-                    <a class="btn" id="readFromFile">                          Wczytaj</a>
-                    <a class="btn" id="chooseAlg" onclick="ChooseAlg()">       Wybierz algorytm</a>                  
+                    <a class="btn" id="addVertex" onclick="AddVertexBtt(this)">         Dodaj wierzchołek</a>
+                    <a class="btn" id="removeVertex" onclick="RemoveVertexBtt(this)">   Usuń wierzchołek</a>
+                    <a class="btn" id="addEdge" onclick="AddEdgeBtt(this)">             Dodaj krawędź</a>
+                    <a class="btn" id="removeEdge" onclick="RemoveEdgeBtn(this)">       Usuń krawędź</a>
+                    <a class="btn" id="moveVertex" onclick="MoveVertexBtn(this)">       Przesuń wierzchołek</a>
+                    <a class="btn" id="editEdge" onclick="EditEdgeBtn(this)">           Edytuj krawędź</a>
+                    <a class="btn" id="simulateForces" onclick="SimulateForcesBtn(this)">Symuluj siły</a>
+                    <a class="btn" id="saveToFile" onclick="SaveToFileBtn(this)">       Zapisz</a>
+                    <a class="btn" id="readFromFile" onclick="ReadFromFileBtn(this)">   Wczytaj</a>
+                    <a class="btn" id="chooseAlg" onclick="ChooseAlg()">                Wybierz algorytm</a>                  
+                    <a class="btn" id="rndGraph" onclick="RandomGraph()">               Losuj graf</a>                  
                 </div>
                 <div id="toolbarChooseAlg" style="display: none;">
                     <a class="btn" id="kolory">                                Kolory</a>

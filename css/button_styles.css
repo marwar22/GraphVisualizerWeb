@@ -24,7 +24,9 @@
   right: 0.02rem;
   box-shadow: -0.08rem 0.2rem greenyellow, -0.08rem 0.5rem #222;
 }
-.btn:active {
+.btn:active, .btnPressed,.btnPressed:hover {
+  background-color: black;
+  color: rgb(162, 162, 162); 
   top: 0.25rem;
   right: 0.05rem;
   box-shadow: -0.05rem 0.05rem greenyellow, -0.05rem 0.35rem #222;
