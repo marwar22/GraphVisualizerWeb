@@ -120,28 +120,33 @@ const G = new Graph();
     function RandomGraph(){
         G.ClearGraph();
 
-        var numVertices = 8;
-        var numEdges = 9;
-        for(i=0; i<numVertices; i++){
-            var position = {
-                x: getRandomInt(0, graphCanvas.clientWidth),
-                y: getRandomInt(0, graphCanvas.clientHeight) 
-            }
-            G.AddVertex(position);
-            console.log("vertex added");
-        }
+        // var numVertices = 6;
+        // var numEdges = 9;
+        // for(i=0; i<numVertices; i++){
+        //     var position = {
+        //         x: getRandomInt(0, graphCanvas.clientWidth),
+        //         y: getRandomInt(0, graphCanvas.clientHeight) 
+        //     }
+        //     G.AddVertex(position);
+        //     console.log("vertex added");
+        // }
 
-        G.AddEdge(1, 2, 0, 100);
-        G.AddEdge(1, 3, 1, 100);
-        G.AddEdge(1, 4, 2, 100);
-        G.AddEdge(2, 4, 3, 100);
-        G.AddEdge(3, 4, 4, 100);
-        G.AddEdge(4, 0, 5, 100);
-        G.AddEdge(5, 3, 6, 100);
-        G.AddEdge(5, 1, 7, 100);
-        G.AddEdge(3, 2, 8, 100);
-
-        return;
+        // G.AddEdge(0,1, 0, 100);
+        // G.AddEdge(0,2, 1, 100);
+        // G.AddEdge(0,3, 2, 100);
+        // G.AddEdge(0,4, 3, 100);
+        // G.AddEdge(0,5, 4, 100);
+        // G.AddEdge(1,2, 1, 100);
+        // G.AddEdge(1,3, 2, 100);
+        // G.AddEdge(1,4, 3, 100);
+        // G.AddEdge(1,5, 4, 100);
+        // G.AddEdge(2,3, 2, 100);
+        // G.AddEdge(2,4, 3, 100);
+        // G.AddEdge(2,5, 4, 100);
+        // G.AddEdge(3,4, 3, 100);
+        // G.AddEdge(3,5, 4, 100);
+        // G.AddEdge(4,5, 4, 100);
+        // return;
 
 
         var numVertices = getRandomInt(7,12);
@@ -175,5 +180,5 @@ const G = new Graph();
         RenderGraph();
     }
 
-    setInterval(MainLoop,1000);
+    setInterval(MainLoop,100);
 }

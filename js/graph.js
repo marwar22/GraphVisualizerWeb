@@ -60,7 +60,7 @@ class Graph {
     }
 
     RemoveEdgeFromVertex(id, v) {
-
+        // console.log("id: " + id + " v: " + v); 
         for (let i = 0; i < this.vertices[v].edges.length; i++) {
 
             if (this.vertices[v].edges[i] === id) {
@@ -78,8 +78,8 @@ class Graph {
     RemoveVertex( id ) {
 
 	    console.log("usuwany: " + id );
-	    this.GraphVerticesData();
-	    this.GraphEdgesData();
+	    //this.GraphVerticesData();
+	    //this.GraphEdgesData();
         let S = [];
 
         for (let i = 0; i < this.vertices[id].edges.length; i++){  
@@ -93,19 +93,16 @@ class Graph {
             this.RemoveEdgeFromVertex(S[it], this.edges[S[it]].idVertexTo);
         }
 
+        S.sort(function(a, b){return a-b;}); /// classic sort does not work properly (just JS things)!!!!
+        //mergeSort( S, 0, S.length-1 );
+        
+        console.log(typeof(S[0]));
         for (let it = S.length - 1; it >= 0; it-- ) {
-
-            if( S[it] !== this.edges.length-1 ) {
-                let tmpe1 = this.edges[this.edges.length-1];
-                let tmpe2 = this.edges[S[it]];
-                [ this.edges[this.edges.length-1], this.edges[S[it]] ] = [ this.edges[S[it]], this.edges[this.edges.length-1] ];
-            }
-
+            [ this.edges[this.edges.length-1], this.edges[S[it]] ] = [ this.edges[S[it]], this.edges[this.edges.length-1] ];
             this.edges.pop();
             this.edgesNumber--;
         }
-        this.GraphEdgesData();
-        console.log("edgnum: "+this.edgesNumber);
+
         for (let i=0; i < this.edges.length; i++) {
             this.ChangeAll(this.edges[i].id, i); 
             this.edges[i].id = i;
@@ -123,7 +120,6 @@ class Graph {
 
         }
         
-
         [ this.vertices[id], this.vertices[this.vertices.length-1] ] = [ this.vertices[this.vertices.length-1], this.vertices[id] ];
 
         this.vertices[id].id = id;
@@ -148,8 +144,8 @@ class Graph {
         for (let i = 0; i < this.vertices[this.edges[id].idVertexFrom].edges.length; i++) {
 
             if(this.vertices[this.edges[id].idVertexFrom].edges[i] === this.edges.length) {
-            this.vertices[this.edges[id].idVertexFrom].edges[i] = id;
-            break;
+                this.vertices[this.edges[id].idVertexFrom].edges[i] = id;
+                break;
             }
 
         }
@@ -157,8 +153,8 @@ class Graph {
         for (let i = 0; i < this.vertices[this.edges[id].idVertexTo].edges.length; i++) {
 
             if(this.vertices[this.edges[id].idVertexTo].edges[i] === this.edges.length) {
-            this.vertices[this.edges[id].idVertexTo].edges[i] = id;
-            break;
+                this.vertices[this.edges[id].idVertexTo].edges[i] = id;
+                break;
             }
 
         }
@@ -167,8 +163,6 @@ class Graph {
             this.edges[i].id = i;
         }
         
-        /* tu dwa pierwsze fory byly powielone */
-
         this.edgesNumber--;
 
     }

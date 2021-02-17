@@ -45,3 +45,46 @@ function pointInVertex(vertex_position, y, x){
         return true;
     return false;
 }
+
+
+function mergeSort( T, a, b ) {
+    if( b - a > 1 ) {
+        let c = ( a + b ) / 2;
+        mergeSort( T, a, c );
+        mergeSort( T, c + 1, b );
+        let W = [];
+        let x = a;
+        let y = c + 1;
+        for( ; x <= c && y <= b; ) {
+            if( T [ x ] < T [ y ] ) {
+                W.push( T [ x ] );
+                x++;
+            }else
+            {
+                W.push( T [ y ] );
+                y++;
+            }
+        }
+        for( ; x <= c; ) {
+            W.push( T [ x ] );
+            x++;
+        }
+        for( ; y <= b; ) {
+            W.push( T [ y ] );
+            y++;
+        }
+        for( let i = a; i <= b; i++ ) {
+            T [ i ] = W [ i - a ];
+        }
+    }else
+    {
+        if( a !== b ) {
+            if( T [ a ] > T [ b ] ) {
+                let g = T [ a ];
+                T [ a ] = T [ b ];
+                T [ b ] = g;
+            }
+        }
+    }
+}
+
