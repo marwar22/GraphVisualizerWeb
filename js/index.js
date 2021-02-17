@@ -8,11 +8,28 @@ const G = new Graph();
         console.log(canvas);
         canvas.addEventListener("click", function (evt) {
             var mousePos = getMousePos(canvas, evt);
-            if (state == stateEnum.REMOVEVERTEX) {
-                
-            }
-            alert(mousePos.x + ',' + mousePos.y);
+
+                 if (state == stateEnum.ADDVERTEX) AddVertexToGraph(mousePos);
+            else if (state == stateEnum.REMOVEVERTEX) RemoveVertexFromGraph(mousePos);
         }, false);
+
+        // canvas.addEventListener("click", function (evt) {
+        //     var mousePos = getMousePos(canvas, evt);
+        //     if (state == stateEnum.REMOVEVERTEX) {
+        //         for (i=0; i<G.vertices.length; i++){
+        //             if(pointInVertex(G.vertices[i].position, mousePos.y, mousePos.x)){
+        //                 console.log("do usunięcia: " + i);
+        //                 G.RemoveVertex(i);
+        //                 break;
+        //             }
+        //         }
+        //     }
+
+        //     if (state == stateEnum.ADDVERTEX) {
+        //         G.AddVertex({y: mousePos.y, x: mousePos.x});
+        //     }
+        //     // alert(mousePos.x + ',' + mousePos.y);
+        // }, false);
         
         //Get Mouse Position
         function getMousePos(canvas, evt) {
@@ -22,6 +39,8 @@ const G = new Graph();
                 y: evt.clientY - rect.top
             };
         }
+
+
     
     }
 
@@ -91,8 +110,8 @@ const G = new Graph();
         vertex.position.y = Math.max(vertex.position.y, vertexRadius + canvasMargin);
         vertex.position.y = Math.min(vertex.position.y, graphCanvas.height-vertexRadius-canvasMargin);
 
-        vertex.position.x += 1;
-        vertex.position.y += 1;
+        // vertex.position.x += 1;
+        // vertex.position.y += 1;
         // vertex.position.x += getRandomInt(0,5)-2.5;
         // vertex.position.y += getRandomInt(0,5)-2.5;
         // console.log(vertex.position.x)
@@ -100,8 +119,33 @@ const G = new Graph();
 
     function RandomGraph(){
         G.ClearGraph();
-        var numVertices = getRandomInt(5,12);
-        var numEdges = getRandomInt(15 , Math.max(15,parseInt(numVertices*numVertices/5)));
+
+        var numVertices = 8;
+        var numEdges = 9;
+        for(i=0; i<numVertices; i++){
+            var position = {
+                x: getRandomInt(0, graphCanvas.clientWidth),
+                y: getRandomInt(0, graphCanvas.clientHeight) 
+            }
+            G.AddVertex(position);
+            console.log("vertex added");
+        }
+
+        G.AddEdge(1, 2, 0, 100);
+        G.AddEdge(1, 3, 1, 100);
+        G.AddEdge(1, 4, 2, 100);
+        G.AddEdge(2, 4, 3, 100);
+        G.AddEdge(3, 4, 4, 100);
+        G.AddEdge(4, 0, 5, 100);
+        G.AddEdge(5, 3, 6, 100);
+        G.AddEdge(5, 1, 7, 100);
+        G.AddEdge(3, 2, 8, 100);
+
+        return;
+
+
+        var numVertices = getRandomInt(7,12);
+        var numEdges = getRandomInt(parseInt(numVertices*numVertices/12) , parseInt(numVertices*numVertices/5));
         
         for(i=0; i<numVertices; i++){
             var position = {
@@ -111,17 +155,18 @@ const G = new Graph();
             G.AddVertex(position);
             console.log("vertex added");
         }
-        console.log("numEdges")
+        console.log("numVertices: " + numVertices);
+        console.log("numEdges" + numEdges);
         var edgeCandidates = [];
         for(i=0; i<numVertices; i++)
             for(j=i+1; j<numVertices; j++){
                 var distance = getLength(G.vertices[i], G.vertices[j]);
-                edgeCandidates.push([distance, i, j])
+                edgeCandidates.push([distance, i, j]);
             }
         
         edgeCandidates.sort();
-        console.log(edgeCandidates[0], edgeCandidates[1]);
         for(i=0; i<numEdges; i++){
+            console.log(edgeCandidates[i]);
             G.AddEdge(edgeCandidates[i][1], edgeCandidates[i][2], i, 100);
         }
     }

@@ -20,7 +20,14 @@ class Vertex {
 
     Draw(ctx){
         ctx.beginPath();
+        
+        ctx.fillStyle = "black";
         ctx.arc(this.position.x, this.position.y, vertexRadius, 0, 2 * Math.PI);
         ctx.fill();
+
+        ctx.font = "20px Georgia";
+        ctx.fillStyle = "greenyellow";
+        ctx.fillText(this.id, this.position.x - vertexRadius/2, this.position.y + vertexRadius/2);
+
     }
 }
