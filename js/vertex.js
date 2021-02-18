@@ -25,8 +25,17 @@ class Vertex {
         ctx.arc(this.position.x, this.position.y, vertexRadius, 0, 2 * Math.PI);
         ctx.fill();
 
-        ctx.font = "20px Georgia";
         ctx.fillStyle = "greenyellow";
+        // console.log("id!" + this.id + "   chosen: " + this.isBeingChosen)
+
+        if (this.isBeingChosen == true){
+            console.log("chosen!" + this.id)
+            ctx.arc(this.position.x, this.position.y, vertexRadius*0.9, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+
+        ctx.font = "20px Georgia";
+        //ctx.fillStyle = "greenyellow";
         ctx.fillText(this.id, this.position.x - vertexRadius/2, this.position.y + vertexRadius/2);
 
     }

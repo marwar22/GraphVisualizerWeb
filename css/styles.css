@@ -15,6 +15,16 @@ html, body {
     display:flex;
     flex-direction: column;
     height: 100vh;
+
+    border-radius: 15px 50px 30px;
+    border: 2px greenyellow solid;
+    border-left-width: 10px;
+    border-width: 10px;
+    margin: 10px;
+    /* width: 200px;*/
+    height: 94%;
+    overflow: hidden;
+
 }
 
 a{
@@ -26,9 +36,10 @@ a{
 
 #toolbar {
     background-color: rgb(95, 95, 95);
-    height: 20%;
+    height: auto;
     width: 100% - 20px;
-    min-height: 100px;
+    padding-top: 10px;
+    padding-bottom: 20px;
     min-width: 800px;
     margin-left: 10px;
     margin-right: 10px;
@@ -40,6 +51,7 @@ a{
     align-content: center;
     flex-wrap: wrap;
     height: 100%;
+
     /* width: 90%; */
 }
 

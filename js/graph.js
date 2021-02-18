@@ -6,17 +6,18 @@ class Graph {
         this.edgesNumber = 0;
         this.verticesNumber = 0;
         this.isDirected = false;
-        this.CalculateForces = CalculateForces;
+        this.simulateForces = false;
+        this.chosenVertex = null;
     }
-
+    
     GraphVerticesData(){
         console.log("\nVertices count: ", this.vertices.length);
 
         console.log("Vertices: ");
         console.log(this.vertices);
-	for( let i=0; i<this.verticesNumber;i++ ) {
-	    console.log(this.vertices[i].edges.length);
-	}
+        for( let i=0; i<this.verticesNumber;i++ ) {
+            console.log(this.vertices[i].edges.length);
+        }
     }
 
     GraphEdgesData(){
@@ -93,8 +94,8 @@ class Graph {
             this.RemoveEdgeFromVertex(S[it], this.edges[S[it]].idVertexTo);
         }
 
-        S.sort(function(a, b){return a-b;}); /// classic sort does not work properly (just JS things)!!!!
-        //mergeSort( S, 0, S.length-1 );
+        //S.sort(function(a, b){return a-b;}); /// classic sort does not work properly (just JS things)!!!!
+        mergeSort( S, 0, S.length-1 );
         
         console.log(typeof(S[0]));
         for (let it = S.length - 1; it >= 0; it-- ) {
@@ -139,7 +140,14 @@ class Graph {
 
         [ this.edges[id], this.edges[this.edges.length-1] ] = [ this.edges[this.edges.length-1], this.edges[id] ];
 
+        console.log("this.edges[id]: " + this.edges[id]);
+        console.log(this.vertices[this.edges[id].idVertexFrom].edges);
+
         this.edges.pop();
+        
+        if( id == this.edges.length ) {
+            return;
+        }
 
         for (let i = 0; i < this.vertices[this.edges[id].idVertexFrom].edges.length; i++) {
 
@@ -158,6 +166,7 @@ class Graph {
             }
 
         }
+
 
         for(let i = 0; i<this.edges.length; i++) {
             this.edges[i].id = i;
@@ -183,5 +192,40 @@ class Graph {
     //     }
     // }
     */
+    GetAttributes() {
+        let _G = {            
+            vertices: [],
+            edges: [],
+            edgesNumber: this.edgesNumber,
+            vertivesNumber: this.verticesNumber,
+            isDirected: this.isDirected,
+            simulateForces: this.simulateForces,
+            chosenVertex: this.chosenVertex
+            }
+        this.vertices.forEach((vertex)=>{
+            _G.vertices.push({
+                id:    vertex.id,
+                data1: vertex.data1,
+                data2: vertex.data2,
+                color: vertex.color
+            })
+        });
+        this.edges.forEach((edge)=>{
+            _G.edges.push({
+                id:    edge.id,
+                data1: edge.data1,
+                data2: edge.data2,
+                idVertexFrom: edge.idVertexFrom,
+                idVertexTo: edge.idVertexTo,
+                color: edge.color
+            })
+        });
+        return _G;
+    }
 }
+Graph.prototype.CalculateForces = _CalculateForces;
+Graph.prototype.ApplyForces     = _ApplyForces;
 
+Graph.prototype.toJSON = function(){
+    return this.GetAttributes();
+};

@@ -3,55 +3,50 @@ const G = new Graph();
 {
     window.onload = Init;
     var state = stateEnum.ADDVERTEX;
+    var mouseIsDown = false;
+    var lastMousePosition = null;
+    var graphCanvas;
+    var ctx;
+
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
+    }
+
     function Init() {        
         let canvas = document.getElementById("graphCanvas");
+        graphCanvas = canvas;
+        ctx = graphCanvas.getContext('2d');
         console.log(canvas);
         canvas.addEventListener("click", function (evt) {
             var mousePos = getMousePos(canvas, evt);
 
-                 if (state == stateEnum.ADDVERTEX) AddVertexToGraph(mousePos);
-            else if (state == stateEnum.REMOVEVERTEX) RemoveVertexFromGraph(mousePos);
+                 if (state === stateEnum.ADDVERTEX)      AddVertexToGraph(mousePos);
+            else if (state === stateEnum.REMOVEVERTEX)   RemoveVertexFromGraph(mousePos);
+            else if (state === stateEnum.ADDEDGE)        AddEdgeToGraph(mousePos);
+            else if (state === stateEnum.REMOVEEDGE)     RemoveEdgeFromGraph(mousePos);
         }, false);
 
-        // canvas.addEventListener("click", function (evt) {
-        //     var mousePos = getMousePos(canvas, evt);
-        //     if (state == stateEnum.REMOVEVERTEX) {
-        //         for (i=0; i<G.vertices.length; i++){
-        //             if(pointInVertex(G.vertices[i].position, mousePos.y, mousePos.x)){
-        //                 console.log("do usunięcia: " + i);
-        //                 G.RemoveVertex(i);
-        //                 break;
-        //             }
-        //         }
-        //     }
+        canvas.addEventListener("mousedown", function (evt) {
+            mouseIsDown = true;
+        }, false);
 
-        //     if (state == stateEnum.ADDVERTEX) {
-        //         G.AddVertex({y: mousePos.y, x: mousePos.x});
-        //     }
-        //     // alert(mousePos.x + ',' + mousePos.y);
-        // }, false);
-        
-        //Get Mouse Position
-        function getMousePos(canvas, evt) {
-            var rect = canvas.getBoundingClientRect();
-            return {
-                x: evt.clientX - rect.left,
-                y: evt.clientY - rect.top
-            };
-        }
+        canvas.addEventListener("mouseup", function (evt) {
+            mouseIsDown = false;
+            if (state === stateEnum.MOVEVERTEX) G.chosenVertexId = null;
+        }, false);
 
-
-    
+        canvas.addEventListener("mousemove", function (evt) {
+            lastMousePosition = getMousePos(canvas, evt);
+        })        
+        toolbarEditGraph    = document.getElementById("toolbarEditGraph");
+        toolbarRunAlgorithm = document.getElementById("toolbarRunAlgorithm");
+        toolbarChooseAlg    = document.getElementById("toolbarChooseAlg");
+        setInterval(MainLoop,1000/1000);               
     }
-
-
-    // function printMousePos(event) {
-    //     document.body.textContent =
-    //       "clientX: " + event.clientX +
-    //       " - clientY: " + event.clientY;
-    //   }
-      
-    // document.addEventListener("click", printMousePos);
 
 
     position = {y: 0, x:0};
@@ -59,7 +54,7 @@ const G = new Graph();
     position = {y: 100, x:100};
     G.AddVertex(position);
     G.AddEdge(v=0 ,w=1 ,d1=10);
-    G.AddEdge(v=0 ,w=1 ,d1=20);
+    // G.AddEdge(v=0 ,w=1 ,d1=20);
 
     function DebugRect(ctx){
         ctx.beginPath();
@@ -71,7 +66,7 @@ const G = new Graph();
 
     function RenderGraph() {
         const graphCanvas = document.getElementById("graphCanvas");
-        const ctx = graphCanvas.getContext('2d');
+        let ctx = graphCanvas.getContext('2d');
         
         // const cWidth = graphCanvas.getBoundingClientRect().width;
         // const cHeight = graphCanvas.getBoundingClientRect().height;
@@ -88,8 +83,6 @@ const G = new Graph();
         //G.GraphVerticesData();
         //G.GraphEdgesData();
         
-        G.CalculateForces();
-        G.vertices.forEach(KeepInGraphArea);
         
         
         ctx.strokeStyle = "greenyellow"; // gdybyśmy chcieli zmienić kolor krawędzi to tutaj
@@ -117,7 +110,10 @@ const G = new Graph();
         // console.log(vertex.position.x)
     }
 
-    function RandomGraph(){
+    function RandomGraph(thisbutton) {
+        state = stateEnum.NONE;
+        ClearPressedButtons();
+
         G.ClearGraph();
 
         // var numVertices = 6;
@@ -169,7 +165,7 @@ const G = new Graph();
                 edgeCandidates.push([distance, i, j]);
             }
         
-        edgeCandidates.sort();
+        edgeCandidates.sort(function(a, b){return a[0]-b[0];});
         for(i=0; i<numEdges; i++){
             console.log(edgeCandidates[i]);
             G.AddEdge(edgeCandidates[i][1], edgeCandidates[i][2], i, 100);
@@ -177,8 +173,14 @@ const G = new Graph();
     }
 
     function MainLoop() {
-        RenderGraph();
-    }
+        if (mouseIsDown === true && state === stateEnum.MOVEVERTEX){
+            MoveVertexInGraph(lastMousePosition);
+        }
 
-    setInterval(MainLoop,100);
+        RenderGraph();
+        G.CalculateForces();
+        G.ApplyForces();
+        G.vertices.forEach(KeepInGraphArea);
+
+    }
 }

@@ -28,10 +28,16 @@
                     <a class="btn" id="saveToFileBtn" onclick="SaveToFileBtn(this)">       Zapisz</a>
                     <a class="btn" id="readFromFileBtn" onclick="ReadFromFileBtn(this)">   Wczytaj</a>
                     <a class="btn" id="chooseAlgBtn" onclick="ChooseAlg()">                Wybierz algorytm</a>                  
-                    <a class="btn" id="rndGraphBtn" onclick="RandomGraph()">               Losuj graf</a>                  
+                    <a class="btn" id="rndGraphBtn" onclick="RandomGraph(this)">           Losuj graf</a>
+                    <input id="uploadInput" type="file">
+                    <input type="submit" value="Send file">
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
                 </div>
                 <div id="toolbarChooseAlg" style="display: none;">
-                    <a class="btn" id="colorsBtn">                                 Kolory</a>
+                    <a class="btn" id="colorsBtn" onclick=ColorsAlg()>                Kolory</a>
                     <a class="btn" id="dfsBtn">                                    Dfs</a>
                     <a class="btn" id="bfsBtn">                                    Bfs</a>
                     <a class="btn" id="sccBtn">                                    Silnie spójne składowe</a>

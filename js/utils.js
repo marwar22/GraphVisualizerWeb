@@ -2,6 +2,8 @@ const defaultVertexRadius = 20;
 const minVertexRadius = 13;
 var vertexRadius = defaultVertexRadius;
 
+const middleVertexRadius = 6;
+
 const canvasMargin = 10;
 const defaultHeight = 700;
 const defaultWidth = 1900;
@@ -19,7 +21,7 @@ var stateEnum = {
     REMOVEVERTEX: 1,
     ADDEDGE: 2,
     REMOVEEDGE: 3,
-    MOVEVERTEX: 3,
+    MOVEVERTEX: 4,
     EDITEDGE: 5,
     CHOOSEALG: 6,
     RUNALG: 7,
@@ -38,10 +40,11 @@ function swap(_t1,_t2) {
     _t2 = _t;
 }
 
-function pointInVertex(vertex_position, y, x){
+function pointInVertex(vertex_position, y, x, R=vertexRadius){
     //console.log("y: ", y);
     //console.log("x: ", x);
-    if (Math.sqrt(Math.pow(vertex_position.y - y, 2) + Math.pow(vertex_position.x - x, 2)) < vertexRadius)
+    console.log("dist: " + Math.sqrt(Math.pow(vertex_position.y - y, 2) + Math.pow(vertex_position.x - x, 2)));
+    if (Math.sqrt(Math.pow(vertex_position.y - y, 2) + Math.pow(vertex_position.x - x, 2)) < R)
         return true;
     return false;
 }
@@ -49,7 +52,7 @@ function pointInVertex(vertex_position, y, x){
 
 function mergeSort( T, a, b ) {
     if( b - a > 1 ) {
-        let c = ( a + b ) / 2;
+        let c = ( ( a + b ) - ( a + b ) % 2 ) / 2;
         mergeSort( T, a, c );
         mergeSort( T, c + 1, b );
         let W = [];
@@ -86,5 +89,6 @@ function mergeSort( T, a, b ) {
             }
         }
     }
+
 }
 

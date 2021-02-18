@@ -1,3 +1,7 @@
+var toolbarEditGraph;
+var toolbarRunAlgorithm;
+var toolbarChooseAlg;  
+
 function CheckPressedBefore(thisbutton){
     if (thisbutton.classList.contains("btnPressed")){
         thisbutton.classList.remove("btnPressed");
@@ -34,16 +38,20 @@ function AddEdgeBtt(thisbutton) {
     ClearPressedButtons();
     thisbutton.classList.add("btnPressed");
     
-    G.AddEdge( getRandomInt( 0, G.verticesNumber - 1 ), getRandomInt( 0, G.verticesNumber - 1 ), 1, 1 );
+    // G.AddEdge( getRandomInt( 0, G.verticesNumber - 1 ), getRandomInt( 0, G.verticesNumber - 1 ), 1, 1 );
     G.GraphVerticesData();
     G.GraphEdgesData();
     
 }
 function RemoveEdgeBtn(thisbutton) {
-    if (CheckPressedBefore(thisbutton)){return;}
+    if (CheckPressedBefore(thisbutton)){
+        G.edges.forEach(function(edge){edge.underEdit = false;});
+        return;
+    }
     state = stateEnum.REMOVEEDGE;
     ClearPressedButtons();
     thisbutton.classList.add("btnPressed");
+    G.edges.forEach(function(edge){edge.underEdit = true;});
     G.GraphVerticesData();
     G.GraphEdgesData();
 }
@@ -60,15 +68,22 @@ function EditEdgeBtn(thisbutton) {
     thisbutton.classList.add("btnPressed");    
 }
 function SimulateForcesBtn(thisbutton) {
-    if (CheckPressedBefore(thisbutton)){return;}
-    ClearPressedButtons();
-    thisbutton.classList.add("btnPressed");
+    if (thisbutton.classList.contains("btnPressed")){
+        thisbutton.classList.remove("btnPressed");
+        G.simulateForces = false;
+    }
+
+    else{
+        G.simulateForces = true;
+        thisbutton.classList.add("btnPressed");
+    }
 }
 function SaveToFileBtn(thisbutton) {
     if (CheckPressedBefore(thisbutton)){return;}
     ClearPressedButtons();
     thisbutton.classList.add("btnPressed");
-    SaveGraph();
+    SaveGraph( G );
+    SaveGraph2( G );
     thisbutton.classList.remove("btnPressed");
 }
 function ReadFromFileBtn(thisbutton) {
@@ -80,15 +95,12 @@ function ReadFromFileBtn(thisbutton) {
 }
 
 function ChooseAlg() { 
-    const toolbarEditGraph = document.getElementById("toolbarEditGraph");
-    const toolbarChooseAlg = document.getElementById("toolbarChooseAlg");
     toolbarEditGraph.style.display = "none";
     toolbarChooseAlg.style.display = "flex";
 }
 
 function ReturnToEdit(){
-    const toolbarEditGraph = document.getElementById("toolbarEditGraph");
-    const toolbarChooseAlg = document.getElementById("toolbarChooseAlg");
+
     toolbarEditGraph.style.display = "flex";
     toolbarChooseAlg.style.display = "none";
     
@@ -97,20 +109,17 @@ function ReturnToEdit(){
 }
 
 function GoToAlgorithm() {
-    const toolbarRunAlgorithm = document.getElementById("toolbarRunAlgorithm");
-    const toolbarChooseAlg = document.getElementById("toolbarChooseAlg");
     toolbarRunAlgorithm.style.display = "flex";
     toolbarChooseAlg.style.display = "none";
 }
 
 function ReturntoChooseAlg() {
-    const toolbarRunAlgorithm = document.getElementById("toolbarRunAlgorithm");
-    const toolbarChooseAlg = document.getElementById("toolbarChooseAlg");
     toolbarChooseAlg.style.display = "flex";
     toolbarRunAlgorithm.style.display = "none";
 }
 
 function ClearPressedButtons() {
+    G.chosenVertexId = null;
     Array.from(document.getElementsByClassName("btnPressed")).forEach(
         function(button) {
             if (!button.classList.contains("standalone"))

@@ -6,11 +6,13 @@ function GetAngleByCoordinates(x, y) {
     return angle;
 }
 
-function GetAngleByPoints(vertex1, vertex2) 
-{
+function GetAngleByPoints(vertex1, vertex2) {
+    console.log("v1v2:",vertex1, vertex2);
     x = vertex1.position.x - vertex2.position.x;
     y = vertex1.position.y - vertex2.position.y;
+    console.log("v1v2:",vertex1, vertex2,x,y);
     return GetAngleByCoordinates(x, y);
+            
 }
 
 // float getLength(sf::Vector2f p1, sf::Vector2f p2) {//odległość między dwoma punktami w przestrzeni
@@ -58,6 +60,37 @@ function MidEdgeVertexAttractionForce(distance,optDst = OPT_ME_V_DST) {
     return Math.min(distance / 100, force);
 }
 
-function CalculateForces(){
-    //console.log("istnieje");
+function _CalculateForces(){
+    for ( let i=0; i<this.verticesNumber; i++) 
+        G.vertices[i].force = {
+            y: 0,
+            x: 0
+        };
+    if(this.simulateForces) {
+        let syf = {
+            position: {
+                x:graphCanvas.width/2,//700,
+                y:graphCanvas.height/2
+            } 
+        };
+
+        for ( let i=0; i<this.verticesNumber; i++) {
+            let dist = getLength(syf,G.vertices[i]);
+            let forceValue = CenterGravityForce(dist)*100;
+            let angle = GetAngleByPoints(syf, G.vertices[i]);
+            let Vector2f = {x: forceValue * Math.cos(angle), y: forceValue * Math.sin(angle)};
+            G.vertices[i].force.x -= Vector2f.x;
+            G.vertices[i].force.y -= Vector2f.y;
+        }        
+    }
+}
+
+function _ApplyForces() {
+    if(this.simulateForces) {
+        for ( let i=0; i<this.verticesNumber; i++) {
+            G.vertices[i].position.x += G.vertices[i].force.x;
+            G.vertices[i].position.y += G.vertices[i].force.y;
+        }
+        G.vertices.forEach(KeepInGraphArea);
+    }
 }
