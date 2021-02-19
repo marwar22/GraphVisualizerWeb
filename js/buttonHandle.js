@@ -51,6 +51,7 @@ function RemoveEdgeBtn(thisbutton) {
     state = stateEnum.REMOVEEDGE;
     ClearPressedButtons();
     thisbutton.classList.add("btnPressed");
+    
     G.edges.forEach(function(edge){edge.underEdit = true;});
     G.GraphVerticesData();
     G.GraphEdgesData();
@@ -62,10 +63,18 @@ function MoveVertexBtn(thisbutton) {
     thisbutton.classList.add("btnPressed");
 }
 function EditEdgeBtn(thisbutton) {
-    if (CheckPressedBefore(thisbutton)){return;}
+    if (CheckPressedBefore(thisbutton)){
+        G.chosenVertexId = null;
+        G.chosenEdgeId = null;
+        G.edges.forEach(function(edge){edge.underEdit = false;});
+        return;
+    }
     state = stateEnum.EDITEDGE;
     ClearPressedButtons();
     thisbutton.classList.add("btnPressed");    
+
+    G.edges.forEach(function(edge){edge.underEdit = true;});
+
 }
 function SimulateForcesBtn(thisbutton) {
     if (thisbutton.classList.contains("btnPressed")){
@@ -83,18 +92,23 @@ function SaveToFileBtn(thisbutton) {
     ClearPressedButtons();
     thisbutton.classList.add("btnPressed");
     SaveGraph( G );
-    SaveGraph2( G );
-    thisbutton.classList.remove("btnPressed");
-}
-function ReadFromFileBtn(thisbutton) {
-    if (CheckPressedBefore(thisbutton)){return;}
-    ClearPressedButtons();
-    thisbutton.classList.add("btnPressed");
-    LoadGraph();
     thisbutton.classList.remove("btnPressed");
 }
 
+function ReadFromFileBtn() {
+    G.chosenVertexId = null;
+    G.edges.forEach(function(edge){edge.underEdit = false;});
+    toolbarEditGraph.style.display = "none";
+    toolbarLoadFile.style.display = "flex";
+}
+
+function ReadGraph() {
+    LoadGraph( G );
+}
+
 function ChooseAlg() { 
+    G.chosenVertexId = null;
+    G.edges.forEach(function(edge){edge.underEdit = false;});
     toolbarEditGraph.style.display = "none";
     toolbarChooseAlg.style.display = "flex";
 }
@@ -108,18 +122,25 @@ function ReturnToEdit(){
     console.log(toolbarChooseAlg);
 }
 
+function ReturnLoadFile(){
+    toolbarEditGraph.style.display = "flex";
+    toolbarLoadFile.style.display = "none";
+}
+
 function GoToAlgorithm() {
     toolbarRunAlgorithm.style.display = "flex";
     toolbarChooseAlg.style.display = "none";
 }
 
-function ReturntoChooseAlg() {
+function ReturnToChooseAlg() {
     toolbarChooseAlg.style.display = "flex";
     toolbarRunAlgorithm.style.display = "none";
 }
 
 function ClearPressedButtons() {
     G.chosenVertexId = null;
+    G.chosenEdgeId = null;
+    G.edges.forEach(function(edge){edge.underEdit = false;});
     Array.from(document.getElementsByClassName("btnPressed")).forEach(
         function(button) {
             if (!button.classList.contains("standalone"))

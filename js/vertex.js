@@ -33,10 +33,16 @@ class Vertex {
             ctx.arc(this.position.x, this.position.y, vertexRadius*0.9, 0, 2 * Math.PI);
             ctx.stroke();
         }
-
-        ctx.font = "20px Georgia";
+        let fontSize = 20;
+        if (parseInt(this.id) >= 100)
+            fontSize = 15;
+        if (parseInt(this.id) >= 1000)
+            fontSize = 12;
+        
+        ctx.font = `${fontSize}px Courier`;
         //ctx.fillStyle = "greenyellow";
-        ctx.fillText(this.id, this.position.x - vertexRadius/2, this.position.y + vertexRadius/2);
+        ctx.textAlign = "center";
+        ctx.fillText(this.id, this.position.x, this.position.y + fontSize/3);
 
     }
 }

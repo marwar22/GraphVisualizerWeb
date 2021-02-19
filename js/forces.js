@@ -7,10 +7,10 @@ function GetAngleByCoordinates(x, y) {
 }
 
 function GetAngleByPoints(vertex1, vertex2) {
-    console.log("v1v2:",vertex1, vertex2);
+    //console.log("v1v2:",vertex1, vertex2);
     x = vertex1.position.x - vertex2.position.x;
     y = vertex1.position.y - vertex2.position.y;
-    console.log("v1v2:",vertex1, vertex2,x,y);
+    //console.log("v1v2:",vertex1, vertex2,x,y);
     return GetAngleByCoordinates(x, y);
             
 }
@@ -24,7 +24,7 @@ function getLength(vertex1, vertex2) {
 }
 
 function CenterGravityForce(distance) {
-	return distance * distance / 5000000;
+	return Math.pow(distance,1.5) / 10000;
 }
 
 function VertexRepulsionForce(distance) {
@@ -74,14 +74,40 @@ function _CalculateForces(){
             } 
         };
 
-        for ( let i=0; i<this.verticesNumber; i++) {
+        for ( let i=0; i<this.verticesNumber; i++) {//GRAWITACJA NEWTONOWSKA
             let dist = getLength(syf,G.vertices[i]);
-            let forceValue = CenterGravityForce(dist)*100;
+            let forceValue = CenterGravityForce(dist);
             let angle = GetAngleByPoints(syf, G.vertices[i]);
             let Vector2f = {x: forceValue * Math.cos(angle), y: forceValue * Math.sin(angle)};
             G.vertices[i].force.x -= Vector2f.x;
             G.vertices[i].force.y -= Vector2f.y;
-        }        
+        }       
+        for ( let i=0; i<this.edgesNumber; i++) {//PRZYCIAGANIE NA KRAWDZIACH
+            let v = G.edges[i].idVertexFrom;
+            let u = G.edges[i].idVertexTo;
+            let dist = getLength(G.vertices[v],G.vertices[u]);
+            let forceValue = EdgeAttractionForce(dist);
+            let angle = GetAngleByPoints(G.vertices[v], G.vertices[u]);
+            let Vector2f = {x: forceValue * Math.cos(angle), y: forceValue * Math.sin(angle)};
+            G.vertices[v].force.x += Vector2f.x;
+            G.vertices[v].force.y += Vector2f.y;
+            G.vertices[u].force.x -= Vector2f.x;
+            G.vertices[u].force.y -= Vector2f.y;
+        }
+        for ( let i=0; i<this.verticesNumber; i++) {//ODPYCHANIE SIE WSZYSTKICH WSZYSTKICH V
+            for ( let j = i + 1; j<this.verticesNumber; j++) {
+                let v = i;
+                let u = j;
+                let dist = getLength(G.vertices[v],G.vertices[u]);
+                let forceValue = VertexRepulsionForce(dist);
+                let angle = GetAngleByPoints(G.vertices[v], G.vertices[u]);
+                let Vector2f = {x: forceValue * Math.cos(angle), y: forceValue * Math.sin(angle)};
+                G.vertices[v].force.x += Vector2f.x;
+                G.vertices[v].force.y += Vector2f.y;
+                G.vertices[u].force.x -= Vector2f.x;
+                G.vertices[u].force.y -= Vector2f.y;
+            }
+        }
     }
 }
 
@@ -92,5 +118,8 @@ function _ApplyForces() {
             G.vertices[i].position.y += G.vertices[i].force.y;
         }
         G.vertices.forEach(KeepInGraphArea);
+
+      
     }
+
 }

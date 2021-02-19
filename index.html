@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>GraphVisualizer</title>
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/button_styles.css">
         <script src="js/utils.js"></script>
@@ -29,13 +30,12 @@
                     <a class="btn" id="readFromFileBtn" onclick="ReadFromFileBtn(this)">   Wczytaj</a>
                     <a class="btn" id="chooseAlgBtn" onclick="ChooseAlg()">                Wybierz algorytm</a>                  
                     <a class="btn" id="rndGraphBtn" onclick="RandomGraph(this)">           Losuj graf</a>
-                    <input id="uploadInput" type="file">
-                    <input type="submit" value="Send file">
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
+                    <br>
+                    <p id = "renderTime"></p>
+                    <br>
+                    <p id = "calculateTime"></p>
                 </div>
+                
                 <div id="toolbarChooseAlg" style="display: none;">
                     <a class="btn" id="colorsBtn" onclick=ColorsAlg()>                Kolory</a>
                     <a class="btn" id="dfsBtn">                                    Dfs</a>
@@ -55,6 +55,18 @@
                         <a class = "btn" id="leftBtn">                              Lewo</a>
                         <a class = "btn" id = "ReturnToChooseAlgBtn" onclick="ReturnToChooseAlg()"> Powrót</a>
                     
+                </div>
+                <div id="toolbarLoadFile" style="display: none;">
+                    <input id="uploadInput" type="file" multiple>
+                    <script>
+                        const uploadInputEl = document.getElementById('uploadInput');
+                        uploadInputEl.addEventListener('change', (event) => {
+                            const list = event.target.files;
+                            file = list[0];
+                        });
+                    </script>
+                    <a class="btn" id="LoadGraphBtn" onclick="ReadGraph()">             Wczytaj</a>
+                    <a class="btn" id="ReturnLoadFileBtn" onclick="ReturnLoadFile()">   Powrót</a>
                 </div>
             </div>  
 

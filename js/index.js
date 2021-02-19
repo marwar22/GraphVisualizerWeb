@@ -1,12 +1,15 @@
 const G = new Graph();
+let file;
 
 {
     window.onload = Init;
     var state = stateEnum.ADDVERTEX;
-    var mouseIsDown = false;
     var lastMousePosition = null;
+    var mouseIsDown = false;
+
     var graphCanvas;
     var ctx;
+
 
     function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
@@ -28,24 +31,73 @@ const G = new Graph();
             else if (state === stateEnum.REMOVEVERTEX)   RemoveVertexFromGraph(mousePos);
             else if (state === stateEnum.ADDEDGE)        AddEdgeToGraph(mousePos);
             else if (state === stateEnum.REMOVEEDGE)     RemoveEdgeFromGraph(mousePos);
+            else if (state === stateEnum.EDITEDGE)       SelectEdge(mousePos);
         }, false);
 
-        canvas.addEventListener("mousedown", function (evt) {
+        document.addEventListener("mousedown", function (evt) {
             mouseIsDown = true;
         }, false);
 
-        canvas.addEventListener("mouseup", function (evt) {
+        document.addEventListener("mouseup", function (evt) {
             mouseIsDown = false;
             if (state === stateEnum.MOVEVERTEX) G.chosenVertexId = null;
         }, false);
 
-        canvas.addEventListener("mousemove", function (evt) {
+        document.addEventListener("mousemove", function (evt) {
             lastMousePosition = getMousePos(canvas, evt);
-        })        
+        });        
+
+        document.addEventListener('keydown', function(evt) {
+            console.log(evt.key + typeof(evt.key));
+
+            if (state === stateEnum.EDITEDGE){
+                if (G.chosenEdgeId != null){
+                    G.edges[G.chosenEdgeId].data[0] = parseInt(G.edges[G.chosenEdgeId].data[0]);
+                    console.log("id != null");
+                   
+                    if ('0' <= evt.key && evt.key <= '9'){
+                        G.edges[G.chosenEdgeId].data[0] *= 10;
+
+                        if (G.edges[G.chosenEdgeId].data[0] >= 0)
+                            G.edges[G.chosenEdgeId].data[0] += parseInt(evt.key);
+                        
+                        else
+                            G.edges[G.chosenEdgeId].data[0] -= parseInt(evt.key);
+                    }
+
+                    switch(evt.key){
+                        case "-":
+                            G.edges[G.chosenEdgeId].data[0] *= -1;
+                            break;
+                        case "Backspace":
+                            G.edges[G.chosenEdgeId].data[0] = parseInt(G.edges[G.chosenEdgeId].data[0] / 10);
+                            break;
+                        case "Delete":
+                            G.edges[G.chosenEdgeId].data[0] = parseInt(G.edges[G.chosenEdgeId].data[0] / 10);
+                            break;
+                        
+                        case "Enter":
+                            state = stateEnum.NONE;
+                            G.chosenVertexId = null;
+                            G.chosenEdgeId = null;
+                            G.edges.forEach(function(edge){edge.underEdit = false;});
+
+                            var editButton = document.getElementById("editEdgeBtn");
+                            editButton.classList.remove("btnPressed");
+                            break;
+                    }
+                    if (G.chosenEdgeId != null)
+                        console.log("weight: ", G.edges[G.chosenEdgeId].data[0]);
+                
+                }
+            }
+
+        }, false);
+
         toolbarEditGraph    = document.getElementById("toolbarEditGraph");
         toolbarRunAlgorithm = document.getElementById("toolbarRunAlgorithm");
         toolbarChooseAlg    = document.getElementById("toolbarChooseAlg");
-        setInterval(MainLoop,1000/1000);               
+        setInterval(MainLoop,1000/100); 
     }
 
 
@@ -145,8 +197,9 @@ const G = new Graph();
         // return;
 
 
-        var numVertices = getRandomInt(7,12);
+        var numVertices = getRandomInt(7,500);
         var numEdges = getRandomInt(parseInt(numVertices*numVertices/12) , parseInt(numVertices*numVertices/5));
+        if( numEdges > 1000 ) numEdges = 2000;
         
         for(i=0; i<numVertices; i++){
             var position = {
@@ -175,12 +228,21 @@ const G = new Graph();
     function MainLoop() {
         if (mouseIsDown === true && state === stateEnum.MOVEVERTEX){
             MoveVertexInGraph(lastMousePosition);
-        }
+        }       
 
-        RenderGraph();
+        let preCalclulate = new Date();
         G.CalculateForces();
-        G.ApplyForces();
+        let postCalculate = new Date();
+        G.ApplyForces();        
         G.vertices.forEach(KeepInGraphArea);
+        let preRender = new Date();
+        RenderGraph();
+        let postRender = new Date();
+        
+        document.getElementById("renderTime").innerHTML = "Render: " + (postRender - preRender).toString()+" ";
+        document.getElementById("calculateTime").innerHTML = " ForcesC: " + (postCalculate - preCalclulate).toString();
+        //let applyForces = new Date();
+        
 
     }
 }

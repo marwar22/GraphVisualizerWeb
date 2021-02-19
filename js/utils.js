@@ -10,10 +10,10 @@ const defaultWidth = 1900;
 const defaultSurfaceArea = defaultHeight * defaultWidth;
 
 
-const OPT_V_DST = -1;
+const OPT_V_DST = 150;
 const OPT_ME_OME_DST = -1;
 const OPT_ME_ME_DST = -1;
-const OPT_E_DST = -1;
+const OPT_E_DST = 150;
 const OPT_ME_V_DST = -1;
 
 var stateEnum = {

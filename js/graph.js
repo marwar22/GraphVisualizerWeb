@@ -7,7 +7,8 @@ class Graph {
         this.verticesNumber = 0;
         this.isDirected = false;
         this.simulateForces = false;
-        this.chosenVertex = null;
+        this.chosenVertexId = null;
+        this.chosenEdgeId = null;
     }
     
     GraphVerticesData(){
@@ -225,6 +226,7 @@ class Graph {
 }
 Graph.prototype.CalculateForces = _CalculateForces;
 Graph.prototype.ApplyForces     = _ApplyForces;
+
 
 Graph.prototype.toJSON = function(){
     return this.GetAttributes();

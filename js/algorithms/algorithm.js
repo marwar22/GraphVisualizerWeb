@@ -1,5 +1,5 @@
 class Algorithm {
-    constructor () {
-        
+    constructor (alg) {
+        this.StepList = alg;
     }
 }

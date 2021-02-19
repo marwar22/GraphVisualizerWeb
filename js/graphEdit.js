@@ -1,5 +1,5 @@
 function AddVertexToGraph (mousePos){
-    console.log(mousePos);
+    //console.log(mousePos);
     if (state == stateEnum.ADDVERTEX) {
         G.AddVertex({y: mousePos.y, x: mousePos.x});
     }
@@ -56,6 +56,26 @@ function RemoveEdgeFromGraph(mousePos){
             break;
         }
     }
+}
+
+function SelectEdge(mousePos){
+    for (i=0; i<G.edges.length; i++){
+        // console.log("in for");
+        var v1 = G.vertices[G.edges[i].idVertexFrom];
+        var v2 = G.vertices[G.edges[i].idVertexTo];
+        G.edges[i].CalcMidCirlce(v1, v2);
+        if(pointInVertex(G.edges[i].midCirclePos, mousePos.y, mousePos.x, middleVertexRadius)){
+            // console.log("remove edge");
+            G.edges.forEach(function(edge){edge.underEdit = false;});
+            G.edges[i].underEdit = true;
+            G.edges[i].data[0] = 0;
+            G.chosenEdgeId = i;
+
+            console.log("chosenEdgeId: ", i);
+            break;
+        }
+    }
+
 }
 
 function MoveVertexInGraph(mousePos){
