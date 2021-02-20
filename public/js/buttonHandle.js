@@ -76,6 +76,28 @@ function EditEdgeBtn(thisbutton) {
     G.edges.forEach(function(edge){edge.underEdit = true;});
 
 }
+
+function FDialog(){
+    var uploadInputEl = document.createElement('input');
+    uploadInputEl.type = 'file';
+    uploadInputEl.click();
+    uploadInputEl.addEventListener('change', (event) => {
+        const list = event.target.files;
+        file = list[0];
+
+        var textboxFile = document.getElementById('ChosenDirTxtbox');
+        console.log(textboxFile);
+        console.log(file);
+        if (typeof file !== 'undefined')
+            textboxFile.innerHTML = "Wybrany plik: " + file.name;
+    });
+}
+
+function ClearGraph(){
+    ClearPressedButtons();
+    G.ClearGraph();
+}
+
 function SimulateForcesBtn(thisbutton) {
     if (thisbutton.classList.contains("btnPressed")){
         thisbutton.classList.remove("btnPressed");

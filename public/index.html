@@ -5,6 +5,8 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/button_styles.css">
+
+        <script src="/socket.io/socket.io.js"></script>
         <script src="js/utils.js"></script>
         <script src="js/edge.js"></script>
         <script src="js/vertex.js"></script>
@@ -30,6 +32,7 @@
                     <a class="btn" id="readFromFileBtn" onclick="ReadFromFileBtn(this)">   Wczytaj</a>
                     <a class="btn" id="chooseAlgBtn" onclick="ChooseAlg()">                Wybierz algorytm</a>                  
                     <a class="btn" id="rndGraphBtn" onclick="RandomGraph(this)">           Losuj graf</a>
+                    <a class="btn" id="clearGraphBtn" onclick="ClearGraph(this)">          Usuń graf</a>
                     <br>
                     <p id = "renderTime"></p>
                     <br>
@@ -57,16 +60,12 @@
                     
                 </div>
                 <div id="toolbarLoadFile" style="display: none;">
-                    <input id="uploadInput" type="file" multiple>
-                    <script>
-                        const uploadInputEl = document.getElementById('uploadInput');
-                        uploadInputEl.addEventListener('change', (event) => {
-                            const list = event.target.files;
-                            file = list[0];
-                        });
-                    </script>
+                    <a class="btn" id="UploadInputBtn" onclick=FDialog()>               Wybierz plik</a>
                     <a class="btn" id="LoadGraphBtn" onclick="ReadGraph()">             Wczytaj</a>
                     <a class="btn" id="ReturnLoadFileBtn" onclick="ReturnLoadFile()">   Powrót</a>
+                    <a class="break"></a>                    
+                    <a class="textbox" id="ChosenDirTxtbox">                            Wybrany plik: brak</a>
+
                 </div>
             </div>  
 

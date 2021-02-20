@@ -184,6 +184,9 @@ class Graph {
         this.edgesNumber = 0;
         this.verticesNumber = 0;
         this.isDirected = false;
+
+        this.chosenVertexId = null;
+        this.chosenEdgeId = null;
     }/*
 
     // Dfs(v) {

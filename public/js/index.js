@@ -1,7 +1,16 @@
+var socket = io();
+socket.emit('login',"użytkownik","mojehaslo");
+socket.on('login-result', WypiszResult);
+
+function WypiszResult(wynik){
+    console.log(wynik);
+}
+
 const G = new Graph();
 let file;
 
 {
+    
     window.onload = Init;
     var state = stateEnum.ADDVERTEX;
     var lastMousePosition = null;
@@ -197,9 +206,9 @@ let file;
         // return;
 
 
-        var numVertices = getRandomInt(7,500);
+        var numVertices = getRandomInt(7,50);
         var numEdges = getRandomInt(parseInt(numVertices*numVertices/12) , parseInt(numVertices*numVertices/5));
-        if( numEdges > 1000 ) numEdges = 2000;
+        // if( numEdges > 1000 ) numEdges = 1000;
         
         for(i=0; i<numVertices; i++){
             var position = {
