@@ -12,10 +12,14 @@
         <script src="js/vertex.js"></script>
         <script src="js/forces.js"></script>
         <script src="js/graph.js"></script>
-        <script src="js/index.js"></script>
+        <script src="js/algorithms/algorithm.js"></script>
+        <script src="js/algorithms/colors.js"></script>
+        <script src="js/algorithms/dfs.js"></script>
+        <script src="js/steps.js"></script>
         <script src="js/buttonHandle.js"></script>
         <script src="js/graphEdit.js"></script>
         <script src="js/inout.js"></script>
+        <script src="js/index.js"></script>
     </head>
     <body>
         <div id = "container">
@@ -40,23 +44,24 @@
                 </div>
                 
                 <div id="toolbarChooseAlg" style="display: none;">
-                    <a class="btn" id="colorsBtn" onclick=ColorsAlg()>                Kolory</a>
+                    <!-- <a class="btn" id="colorsBtn" onclick=ColorsAlg()>                Kolory</a>
                     <a class="btn" id="dfsBtn">                                    Dfs</a>
                     <a class="btn" id="bfsBtn">                                    Bfs</a>
                     <a class="btn" id="sccBtn">                                    Silnie spójne składowe</a>
                     <a class="btn" id="dijkstraBtn">                               Dijkstra</a>
-                    <!-- //buttony na algorytmy -->
-                    <a class="btn" id="ReturnToEditBtn" onclick="ReturnToEdit()"> Powrót</a>
+                    //buttony na algorytmy
+                    <a class="btn" id="ReturnToEditBtn" onclick="ReturnToEdit()"> Powrót</a> -->
                     
 
                 </div>
                 <div id = "toolbarRunAlgorithm" style="display: none;">
                     <!-- <a class="btn" id="" -->
-                        <a class = "btn" id="runBtn">                               Start</a>
+                        <a class = "btn" id="runBtn">                 &nbsp;&#9658;&nbsp;</a>
                         <a class = "btn" id="pauseBtn">                             Pauza</a>
-                        <a class = "btn" id="rightBtn">                             Prawo</a>
-                        <a class = "btn" id="leftBtn">                              Lewo</a>
-                        <a class = "btn" id = "ReturnToChooseAlgBtn" onclick="ReturnToChooseAlg()"> Powrót</a>
+                        <a class = "btn" id="leftBtn"  onclick="GoLeftAlg()">  &nbsp;&larrb;&nbsp;</a>
+                        <a class = "btn" id="rightBtn" onclick="GoRightAlg()"> &nbsp;&rarrb;&nbsp;</a>
+                        <input type="range" min="0" max="100" value="0" change="SpeedInputChange();" style="width:6rem;">
+                        <a class = "btn" id = "ReturnToChooseAlgBtn" onclick="ReturnToChooseAlg()">  &nbsp;&crarr;&nbsp;</a>
                     
                 </div>
                 <div id="toolbarLoadFile" style="display: none;">

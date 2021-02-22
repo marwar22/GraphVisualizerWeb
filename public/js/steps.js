@@ -15,12 +15,12 @@ class EdgeChange {
     }
 }
 class Step {
-    constructor() {
-        this.verteicesChanges  = [];
-        this.edgesChanges      = [];
+    constructor(_verticesChanges,_edgesChanges) {
+        this.verticesChanges  = _verticesChanges;
+        this.edgesChanges      = _edgesChanges;
     }
     Clear() {
-        this.verteicesChanges  = [];
+        this.verticesChanges  = [];
         this.edgesChanges      = [];
     }
 }
@@ -36,27 +36,26 @@ class StepList {
         this.forwardSteps = [];
         this.backwardSteps = [];
     }
-    InitState() {
+    InitStep(step) {
         if (this.currentStep >-2) throw 'Tried to InitState(step) another time';
         ++this.currentStep;
-        forwardSteps.push(step);
+        this.forwardSteps.push(step);
     }
-    AddState(step) {
+    AddStep(step) {
         if (this.currentStep == -2) throw 'Tried to AddState(step), before InitState(step)';
-        ++this.currentStep;
-        forwardSteps.push(step);
+        this.forwardSteps.push(step);
     }
-    AddBackwardsStep(step) {
+    AddBackwardStep(step) {
         let bStep = {
-            verticesChanges = {},
-            edgesChanges = {}
+            verticesChanges: [],
+            edgesChanges: []
         }
         step.verticesChanges.forEach((vertex)=>{
-          verticesChanges.push(new VertexChange(G.vertices[vertex.id]));
+            bStep.verticesChanges.push(new VertexChange(this.G.vertices[vertex.id]));
         });
 
         step.edgesChanges.forEach((edge) => {
-            edgesChanges.push(new EdgeChange(G.edges[edge.id]));
+            bStep.edgesChanges.push(new EdgeChange(this.G.edges[edge.id]));
         });
         this.backwardSteps.push(bStep);
     }
@@ -65,36 +64,36 @@ class StepList {
         if (this.currentStep <= 0) return;
         --this.currentStep;
         this.backwardSteps[this.currentStep].verticesChanges.forEach((vertex)=>{
-            G.vertices[vertex.id].data1 = vertex.data1;
-            G.vertices[vertex.id].data2 = vertex.data2;
-            G.vertices[vertex.id].color = vertex.color;
+            this.G.vertices[vertex.id].data1 = vertex.data1;
+            this.G.vertices[vertex.id].data2 = vertex.data2;
+            this.G.vertices[vertex.id].color = vertex.color;
         });
 
         this.backwardSteps[this.currentStep].edgesChanges.forEach((edge)=>{
-            G.vertices[vertex.id].data1 = edge.data1;
-            G.vertices[vertex.id].data2 = edge.data2;
-            G.vertices[vertex.id].color = edge.color;
+            this.G.edges[edge.id].data1 = edge.data1;
+            this.G.edges[edge.id].data2 = edge.data2;
+            this.G.edges[edge.id].color = edge.color;
         });
     }
 
     GoRight() {
         if(this.currentStep + 1 >= this.forwardSteps.length) return; 
         ++this.currentStep;
-        if (currentStep >= maxStepEver) {
-            maxStepEver = currentStep;
-            AddBackwardsStep(forwardSteps[currentStep]);
+        if (this.currentStep > this.maxStepEver) {
+            this.maxStepEver = this.currentStep;
+            this.AddBackwardStep(this.forwardSteps[this.currentStep]);
         }
 
         this.forwardSteps[this.currentStep].verticesChanges.forEach((vertex)=>{
-            G.vertices[vertex.id].data1 = vertex.data1;
-            G.vertices[vertex.id].data2 = vertex.data2;
-            G.vertices[vertex.id].color = vertex.color;
+            this.G.vertices[vertex.id].data1 = vertex.data1;
+            this.G.vertices[vertex.id].data2 = vertex.data2;
+            this.G.vertices[vertex.id].color = vertex.color;
         });
 
         this.forwardSteps[this.currentStep].edgesChanges.forEach((edge)=>{
-            G.vertices[vertex.id].data1 = edge.data1;
-            G.vertices[vertex.id].data2 = edge.data2;
-            G.vertices[vertex.id].color = edge.color;
+            this.G.edges[edge.id].data1 = edge.data1;
+            this.G.edges[edge.id].data2 = edge.data2;
+            this.G.edges[edge.id].color = edge.color;
         });
     }
 

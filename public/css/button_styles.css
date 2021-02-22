@@ -41,7 +41,7 @@
 }
 
 /* ::-webkit-file-upload-button */
-input {
+/* input {
   background: rgb(255, 255, 255);
   border:black solid 0.25rem;
 
@@ -58,7 +58,7 @@ input {
   transition: all .2s ease;
   outline: none;
   font-weight: 700;
-} 
+}  */
 
 .break {
   flex-basis: 100%;

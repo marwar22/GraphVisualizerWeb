@@ -136,7 +136,7 @@ function ChooseAlg() {
 }
 
 function ReturnToEdit(){
-
+    state = stateEnum.NONE;
     toolbarEditGraph.style.display = "flex";
     toolbarChooseAlg.style.display = "none";
     
@@ -157,6 +157,14 @@ function GoToAlgorithm() {
 function ReturnToChooseAlg() {
     toolbarChooseAlg.style.display = "flex";
     toolbarRunAlgorithm.style.display = "none";
+}
+
+function GoRightAlg() {
+    currentAlg.stepList.GoRight();
+}
+
+function GoLeftAlg() {
+    currentAlg.stepList.GoLeft();
 }
 
 function ClearPressedButtons() {

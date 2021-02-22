@@ -1,3 +1,5 @@
+const DEBUG_EDGES = true;
+
 const defaultVertexRadius = 20;
 const minVertexRadius = 13;
 var vertexRadius = defaultVertexRadius;
@@ -11,10 +13,12 @@ const defaultSurfaceArea = defaultHeight * defaultWidth;
 
 
 const OPT_V_DST = 150;
-const OPT_ME_OME_DST = -1;
+const OPT_ME_OME_DST = 200;
 const OPT_ME_ME_DST = -1;
 const OPT_E_DST = 150;
 const OPT_ME_V_DST = -1;
+
+const LOOP_SCALE = 4;
 
 var stateEnum = {
     ADDVERTEX: 0,

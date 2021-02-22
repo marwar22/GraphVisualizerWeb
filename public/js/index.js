@@ -12,13 +12,13 @@ let file;
 {
     
     window.onload = Init;
-    var state = stateEnum.ADDVERTEX;
+    var state = stateEnum.NONE;
     var lastMousePosition = null;
     var mouseIsDown = false;
 
     var graphCanvas;
     var ctx;
-
+    var lastStepTime = null;
 
     function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
@@ -35,7 +35,7 @@ let file;
         console.log(canvas);
         canvas.addEventListener("click", function (evt) {
             var mousePos = getMousePos(canvas, evt);
-
+            console.log("MouseOnClick",mousePos);
                  if (state === stateEnum.ADDVERTEX)      AddVertexToGraph(mousePos);
             else if (state === stateEnum.REMOVEVERTEX)   RemoveVertexFromGraph(mousePos);
             else if (state === stateEnum.ADDEDGE)        AddEdgeToGraph(mousePos);
@@ -106,13 +106,14 @@ let file;
         toolbarEditGraph    = document.getElementById("toolbarEditGraph");
         toolbarRunAlgorithm = document.getElementById("toolbarRunAlgorithm");
         toolbarChooseAlg    = document.getElementById("toolbarChooseAlg");
-        setInterval(MainLoop,1000/100); 
+        InitAlgorithmToolbar();
+        setInterval(MainLoop,1000/100);//było 100
     }
 
 
-    position = {y: 0, x:0};
-    G.AddVertex(position);
     position = {y: 100, x:100};
+    G.AddVertex(position);
+    position = {y: 100, x:200};
     G.AddVertex(position);
     G.AddEdge(v=0 ,w=1 ,d1=10);
     // G.AddEdge(v=0 ,w=1 ,d1=20);
@@ -157,19 +158,22 @@ let file;
     
     }
 
-    function KeepInGraphArea(vertex){
+    function KeepVertexInGraphArea(vertex){
         vertex.position.x = Math.max(vertex.position.x, vertexRadius + canvasMargin);
         vertex.position.x = Math.min(vertex.position.x, graphCanvas.width-vertexRadius-canvasMargin);
 
         vertex.position.y = Math.max(vertex.position.y, vertexRadius + canvasMargin);
         vertex.position.y = Math.min(vertex.position.y, graphCanvas.height-vertexRadius-canvasMargin);
-
-        // vertex.position.x += 1;
-        // vertex.position.y += 1;
-        // vertex.position.x += getRandomInt(0,5)-2.5;
-        // vertex.position.y += getRandomInt(0,5)-2.5;
-        // console.log(vertex.position.x)
     }
+
+    function KeepEdgeInGraphArea(edge){
+        edge.midCirclePos.position.x = Math.max(edge.midCirclePos.position.x, middleVertexRadius + canvasMargin);
+        edge.midCirclePos.position.x = Math.min(edge.midCirclePos.position.x, graphCanvas.width-middleVertexRadius-canvasMargin);
+
+        edge.midCirclePos.position.y = Math.max(edge.midCirclePos.position.y, middleVertexRadius + canvasMargin);
+        edge.midCirclePos.position.y = Math.min(edge.midCirclePos.position.y, graphCanvas.height-middleVertexRadius-canvasMargin);
+    }
+
 
     function RandomGraph(thisbutton) {
         state = stateEnum.NONE;
@@ -206,7 +210,7 @@ let file;
         // return;
 
 
-        var numVertices = getRandomInt(7,50);
+        var numVertices = getRandomInt(5,20);
         var numEdges = getRandomInt(parseInt(numVertices*numVertices/12) , parseInt(numVertices*numVertices/5));
         // if( numEdges > 1000 ) numEdges = 1000;
         
@@ -229,7 +233,7 @@ let file;
         
         edgeCandidates.sort(function(a, b){return a[0]-b[0];});
         for(i=0; i<numEdges; i++){
-            console.log(edgeCandidates[i]);
+            // console.log(edgeCandidates[i]);
             G.AddEdge(edgeCandidates[i][1], edgeCandidates[i][2], i, 100);
         }
     }
@@ -243,7 +247,8 @@ let file;
         G.CalculateForces();
         let postCalculate = new Date();
         G.ApplyForces();        
-        G.vertices.forEach(KeepInGraphArea);
+        G.vertices.forEach(KeepVertexInGraphArea);
+        G.edges.forEach(KeepEdgeInGraphArea);
         let preRender = new Date();
         RenderGraph();
         let postRender = new Date();
