@@ -61,28 +61,29 @@ let file;
 
             if (state === stateEnum.EDITEDGE){
                 if (G.chosenEdgeId != null){
-                    G.edges[G.chosenEdgeId].data[0] = parseInt(G.edges[G.chosenEdgeId].data[0]);
+                    console.log("bef: ", G.edges[G.chosenEdgeId].data1);
+                    G.edges[G.chosenEdgeId].data1 = parseInt(G.edges[G.chosenEdgeId].data1);
                     console.log("id != null");
                    
                     if ('0' <= evt.key && evt.key <= '9'){
-                        G.edges[G.chosenEdgeId].data[0] *= 10;
+                        G.edges[G.chosenEdgeId].data1 *= 10;
 
-                        if (G.edges[G.chosenEdgeId].data[0] >= 0)
-                            G.edges[G.chosenEdgeId].data[0] += parseInt(evt.key);
+                        if (G.edges[G.chosenEdgeId].data1 >= 0)
+                            G.edges[G.chosenEdgeId].data1 += parseInt(evt.key);
                         
                         else
-                            G.edges[G.chosenEdgeId].data[0] -= parseInt(evt.key);
+                            G.edges[G.chosenEdgeId].data1 -= parseInt(evt.key);
                     }
 
                     switch(evt.key){
                         case "-":
-                            G.edges[G.chosenEdgeId].data[0] *= -1;
+                            G.edges[G.chosenEdgeId].data1 *= -1;
                             break;
                         case "Backspace":
-                            G.edges[G.chosenEdgeId].data[0] = parseInt(G.edges[G.chosenEdgeId].data[0] / 10);
+                            G.edges[G.chosenEdgeId].data1 = parseInt(G.edges[G.chosenEdgeId].data1 / 10);
                             break;
                         case "Delete":
-                            G.edges[G.chosenEdgeId].data[0] = parseInt(G.edges[G.chosenEdgeId].data[0] / 10);
+                            G.edges[G.chosenEdgeId].data1 = parseInt(G.edges[G.chosenEdgeId].data1 / 10);
                             break;
                         
                         case "Enter":
@@ -96,7 +97,7 @@ let file;
                             break;
                     }
                     if (G.chosenEdgeId != null)
-                        console.log("weight: ", G.edges[G.chosenEdgeId].data[0]);
+                        console.log("aft: ", G.edges[G.chosenEdgeId].data1);
                 
                 }
             }
@@ -139,6 +140,9 @@ let file;
         var surfaceArea = graphCanvas.clientHeight*graphCanvas.clientWidth;
         vertexRadius = Math.sqrt(surfaceArea / defaultSurfaceArea) * defaultVertexRadius;
         vertexRadius = Math.max(vertexRadius, minVertexRadius);
+
+        middleVertexRadius = Math.sqrt(surfaceArea / defaultSurfaceArea) * defaultMiddleVertexRadius;
+        middleVertexRadius = Math.max(middleVertexRadius, minMiddleVertexRadius);
         // graphCanvas.width  = graphCanvas.height * (graphCanvas.clientWidth / graphCanvas.clientHeight);
         
         DebugRect(ctx);
@@ -146,8 +150,6 @@ let file;
         //G.GraphEdgesData();
         
         
-        
-        ctx.strokeStyle = "greenyellow"; // gdybyśmy chcieli zmienić kolor krawędzi to tutaj
         G.edges.forEach(function(edge){
             edge.Draw(ctx);
         });
@@ -257,6 +259,15 @@ let file;
         document.getElementById("calculateTime").innerHTML = " ForcesC: " + (postCalculate - preCalclulate).toString();
         //let applyForces = new Date();
         
+        let timeNow = (new Date()).getTime();
+        //console.log(timeNow);
+        //if(lastStepTime !== null) console.log(lastStepTime);
+        if (lastStepTime !== null && timeNow - lastStepTime >= 1000) {
+            console.log(lastStepTime);
+            lastStepTime += 1000;
+            if (timeNow - lastStepTime > 1000) lastStepTime = timeNow - 1000;
+            currentAlg.stepList.GoRight();
+        }
 
     }
 }

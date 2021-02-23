@@ -31,7 +31,8 @@
                     <a class="btn" id="removeEdgeBtn" onclick="RemoveEdgeBtn(this)">       Usuń krawędź</a>
                     <a class="btn" id="moveVertexBtn" onclick="MoveVertexBtn(this)">       Przesuń wierzchołek</a>
                     <a class="btn" id="editEdgeBtn" onclick="EditEdgeBtn(this)">           Edytuj krawędź</a>
-                    <a class="btn standalone" id="simulateForcesBtn" onclick="SimulateForcesBtn(this)">Symuluj siły</a>
+                    <a class="btn btnPressed standalone" id="simulateForcesBtn" onclick="SimulateForcesBtn(this)">Symuluj siły</a>
+                    <a class="btn btnPressed standalone" id="directedGraphBtn" onclick="ChangeIsDirected(this)">Graf skierowany</a>
                     <a class="btn" id="saveToFileBtn" onclick="SaveToFileBtn(this)">       Zapisz</a>
                     <a class="btn" id="readFromFileBtn" onclick="ReadFromFileBtn(this)">   Wczytaj</a>
                     <a class="btn" id="chooseAlgBtn" onclick="ChooseAlg()">                Wybierz algorytm</a>                  
@@ -43,27 +44,18 @@
                     <p id = "calculateTime"></p>
                 </div>
                 
-                <div id="toolbarChooseAlg" style="display: none;">
-                    <!-- <a class="btn" id="colorsBtn" onclick=ColorsAlg()>                Kolory</a>
-                    <a class="btn" id="dfsBtn">                                    Dfs</a>
-                    <a class="btn" id="bfsBtn">                                    Bfs</a>
-                    <a class="btn" id="sccBtn">                                    Silnie spójne składowe</a>
-                    <a class="btn" id="dijkstraBtn">                               Dijkstra</a>
-                    //buttony na algorytmy
-                    <a class="btn" id="ReturnToEditBtn" onclick="ReturnToEdit()"> Powrót</a> -->
-                    
+                <div id="toolbarChooseAlg" style="display: none;"></div>
 
-                </div>
                 <div id = "toolbarRunAlgorithm" style="display: none;">
                     <!-- <a class="btn" id="" -->
-                        <a class = "btn" id="runBtn">                 &nbsp;&#9658;&nbsp;</a>
-                        <a class = "btn" id="pauseBtn">                             Pauza</a>
-                        <a class = "btn" id="leftBtn"  onclick="GoLeftAlg()">  &nbsp;&larrb;&nbsp;</a>
-                        <a class = "btn" id="rightBtn" onclick="GoRightAlg()"> &nbsp;&rarrb;&nbsp;</a>
+                        <a class = "btn" id="runBtn"   onclick="RunAlgBtn(this)">&nbsp;&#9658;&nbsp;</a>
+                        <a class = "btn" id="leftBtn"  onclick="GoLeftAlg()">    &nbsp;&larrb;&nbsp;</a>
+                        <a class = "btn" id="rightBtn" onclick="GoRightAlg()">   &nbsp;&rarrb;&nbsp;</a>
                         <input type="range" min="0" max="100" value="0" change="SpeedInputChange();" style="width:6rem;">
                         <a class = "btn" id = "ReturnToChooseAlgBtn" onclick="ReturnToChooseAlg()">  &nbsp;&crarr;&nbsp;</a>
                     
                 </div>
+
                 <div id="toolbarLoadFile" style="display: none;">
                     <a class="btn" id="UploadInputBtn" onclick=FDialog()>               Wybierz plik</a>
                     <a class="btn" id="LoadGraphBtn" onclick="ReadGraph()">             Wczytaj</a>
@@ -72,6 +64,13 @@
                     <a class="textbox" id="ChosenDirTxtbox">                            Wybrany plik: brak</a>
 
                 </div>
+                
+                <div id="toolbarRandomGraph" style="display: none;">
+                    <!-- TODO -->
+                    <div class="length range__slider" data-min="4" data-max="32"></div>
+                    <input id="rs-range-line" class="rs-range" type="range" value="0" min="0" max="200">
+                </div>
+
             </div>  
 
             <canvas id="graphCanvas" width="600" height="1000">

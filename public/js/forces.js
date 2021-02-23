@@ -24,7 +24,7 @@ function getLength(vertex1, vertex2) {
 }
 
 function CenterGravityForce(distance) {
-    return 0;
+    // return 0;
 	return Math.pow(distance,1.5) / 10000;
 }
 
@@ -42,7 +42,7 @@ function EdgeAttractionForce(distance) {
     return Math.min(distance / 100, force);
 }
 
-function MidEdgeVertexAttractionForce(distance, optDst = 50) {
+function MidEdgeVertexAttractionForce(distance, optDst = 50, minDist = 25) {
     force = distance - optDst;
     force = force * force / 600;
     if (distance < optDst) force *= -1 
@@ -93,6 +93,9 @@ function _CalculateForces(){
             G.vertices[i].force.x -= Vector2f.x;
             G.vertices[i].force.y -= Vector2f.y;
         }       
+
+        // console.log("this: ", this);
+        // console.log("this.edgesNumber: ", this.edgesNumber);
         for ( let i=0; i<this.edgesNumber; i++) {//PRZYCIAGANIE NA KRAWDZIACH
             let v = G.edges[i].idVertexFrom;
             let u = G.edges[i].idVertexTo;

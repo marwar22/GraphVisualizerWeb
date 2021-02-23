@@ -15,8 +15,8 @@ function GraphToString( _graph ) {
     for( let i = 0; i < _graph.edgesNumber; i++ ) {
         str += _graph.edges[i].idVertexFrom + " ";
         str += _graph.edges[i].idVertexTo + " ";
-        str += _graph.edges[i].data[0] + " ";
-        str += _graph.edges[i].data[1] + " ";
+        str += _graph.edges[i].data1 + " ";
+        str += _graph.edges[i].data2 + " ";
     }
     return str;
 }

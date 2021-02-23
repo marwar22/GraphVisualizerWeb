@@ -49,10 +49,12 @@ function RemoveEdgeFromGraph(mousePos){
         // console.log("in for");
         var v1 = G.vertices[G.edges[i].idVertexFrom];
         var v2 = G.vertices[G.edges[i].idVertexTo];
-        G.edges[i].CalcMidCirlce(v1, v2);
-        if(pointInVertex(G.edges[i].midCirclePos, mousePos.y, mousePos.x, middleVertexRadius)){
-            // console.log("remove edge");
+        // G.edges[i].CalcMidCirlce(v1, v2);
+        if(pointInVertex(G.edges[i].midCirclePos.position, mousePos.y, mousePos.x, middleVertexRadius)){
+            console.log("remove edge");
             G.RemoveEdge(i);
+            G.GraphVerticesData();
+            G.GraphEdgesData();
             break;
         }
     }
@@ -63,12 +65,12 @@ function SelectEdge(mousePos){
         // console.log("in for");
         var v1 = G.vertices[G.edges[i].idVertexFrom];
         var v2 = G.vertices[G.edges[i].idVertexTo];
-        G.edges[i].CalcMidCirlce(v1, v2);
-        if(pointInVertex(G.edges[i].midCirclePos, mousePos.y, mousePos.x, middleVertexRadius)){
+        // G.edges[i].CalcMidCirlce(v1, v2);
+        if(pointInVertex(G.edges[i].midCirclePos.position, mousePos.y, mousePos.x, middleVertexRadius)){
             // console.log("remove edge");
             G.edges.forEach(function(edge){edge.underEdit = false;});
             G.edges[i].underEdit = true;
-            G.edges[i].data[0] = 0;
+            // G.edges[i].data1 = 0;
             G.chosenEdgeId = i;
 
             console.log("chosenEdgeId: ", i);

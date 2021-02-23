@@ -5,11 +5,21 @@ class Graph {
         this.vertices = [];
         this.edgesNumber = 0;
         this.verticesNumber = 0;
-        this.isDirected = false;
-        this.simulateForces = false;
+        this.isDirected = true;
+        this.simulateForces = true;
         this.chosenVertexId = null;
         this.chosenEdgeId = null;
     }
+    
+    
+    GetGraphCopy(){
+        let GKopia = JSON.parse(JSON.stringify(G));
+        GKopia.vertices.forEach((vertex,id)=>{
+            vertex.edges = G.vertices[id].edges.slice();
+        });
+        return GKopia;
+    }
+    
     
     GraphVerticesData(){
         console.log("\nVertices count: ", this.vertices.length);
@@ -95,8 +105,8 @@ class Graph {
             this.RemoveEdgeFromVertex(S[it], this.edges[S[it]].idVertexTo);
         }
 
-        //S.sort(function(a, b){return a-b;}); /// classic sort does not work properly (just JS things)!!!!
-        mergeSort( S, 0, S.length-1 );
+        S.sort(function(a, b){return a-b;}); /// classic sort does not work properly (just JS things)!!!!
+        //mergeSort( S, 0, S.length-1 );
         
         console.log(typeof(S[0]));
         for (let it = S.length - 1; it >= 0; it-- ) {
@@ -147,6 +157,7 @@ class Graph {
         this.edges.pop();
         
         if( id == this.edges.length ) {
+            this.edgesNumber -= 1;
             return;
         }
 
@@ -165,16 +176,13 @@ class Graph {
                 this.vertices[this.edges[id].idVertexTo].edges[i] = id;
                 break;
             }
-
         }
-
 
         for(let i = 0; i<this.edges.length; i++) {
             this.edges[i].id = i;
         }
         
-        this.edgesNumber--;
-
+        this.edgesNumber -= 1;
     }
 
     ClearGraph(){
@@ -187,15 +195,9 @@ class Graph {
 
         this.chosenVertexId = null;
         this.chosenEdgeId = null;
-    }/*
-
-    // Dfs(v) {
-    //     this.vertices[v].data1 = 1;
-    //     for(let i = 0; i < this.edgesNumber; i++) {
-    //         if()
-    //     }
-    // }
-    */
+    }
+                    
+        
     GetAttributes() {
         let _G = {            
             vertices: [],

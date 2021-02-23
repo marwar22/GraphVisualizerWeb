@@ -49,6 +49,7 @@ function RemoveEdgeBtn(thisbutton) {
         return;
     }
     state = stateEnum.REMOVEEDGE;
+    // console.log("state = stateEnum.REMOVEEDGE");
     ClearPressedButtons();
     thisbutton.classList.add("btnPressed");
     
@@ -109,6 +110,19 @@ function SimulateForcesBtn(thisbutton) {
         thisbutton.classList.add("btnPressed");
     }
 }
+
+function ChangeIsDirected(thisbutton){
+    if (thisbutton.classList.contains("btnPressed")){
+        thisbutton.classList.remove("btnPressed");
+        G.isDirected = false;
+    }
+
+    else{
+        G.simulateForces = true;
+        thisbutton.classList.add("btnPressed");
+    }
+}
+
 function SaveToFileBtn(thisbutton) {
     if (CheckPressedBefore(thisbutton)){return;}
     ClearPressedButtons();
@@ -131,6 +145,7 @@ function ReadGraph() {
 function ChooseAlg() { 
     G.chosenVertexId = null;
     G.edges.forEach(function(edge){edge.underEdit = false;});
+    
     toolbarEditGraph.style.display = "none";
     toolbarChooseAlg.style.display = "flex";
 }
@@ -157,6 +172,9 @@ function GoToAlgorithm() {
 function ReturnToChooseAlg() {
     toolbarChooseAlg.style.display = "flex";
     toolbarRunAlgorithm.style.display = "none";
+    currentAlg.Clear();
+    currentAlg = null;
+    lastStepTime = null;
 }
 
 function GoRightAlg() {
@@ -177,4 +195,14 @@ function ClearPressedButtons() {
                 button.classList.remove("btnPressed");            
         }
     );
+}
+
+function RunAlgBtn(thisbutton) {
+    if (thisbutton.classList.contains("btnPressed")){
+        thisbutton.classList.remove("btnPressed");
+        lastStepTime = null;
+    } else{
+        thisbutton.classList.add("btnPressed");
+        lastStepTime = (new Date()).getTime();;
+    }
 }

@@ -21,7 +21,7 @@ class Step {
     }
     Clear() {
         this.verticesChanges  = [];
-        this.edgesChanges      = [];
+        this.edgesChanges     = [];
     }
 }
 class StepList {    
@@ -31,18 +31,14 @@ class StepList {
     }
 
     Clear() {
-        this.currentStep = -2;
+        this.forceFirstGoRight = null;
+        this.currentStep = 0;
         this.maxStepEver = 0;
-        this.forwardSteps = [];
+        this.forwardSteps = [{}];
         this.backwardSteps = [];
     }
-    InitStep(step) {
-        if (this.currentStep >-2) throw 'Tried to InitState(step) another time';
-        ++this.currentStep;
-        this.forwardSteps.push(step);
-    }
+
     AddStep(step) {
-        if (this.currentStep == -2) throw 'Tried to AddState(step), before InitState(step)';
         this.forwardSteps.push(step);
     }
     AddBackwardStep(step) {
@@ -61,7 +57,7 @@ class StepList {
     }
     
     GoLeft() {
-        if (this.currentStep <= 0) return;
+        if (this.currentStep <= this.forceFirstGoRight ? 1 : 0) return;
         --this.currentStep;
         this.backwardSteps[this.currentStep].verticesChanges.forEach((vertex)=>{
             this.G.vertices[vertex.id].data1 = vertex.data1;
